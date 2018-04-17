@@ -138,8 +138,9 @@ void game_loop() {
       //}
 
 
+      sensorValue2 = analogRead(A2);
 
-      if (digitalRead(buttonA) == HIGH) {
+      if (digitalRead(buttonA) == HIGH || sensorValue2 > thresh) {
         if ( !(PIND & (1 << PD2)));
         if (bird.y > BIRDH2 * 0.5) bird.vel_y = JUMP_FORCE;
         else bird.vel_y = 0;
@@ -164,7 +165,7 @@ void game_loop() {
       pipe.x -= SPEED;
       // if pipe reached edge of the screen reset its position and gap
       if (pipe.x < -PIPEW) {
-        pipe.x = tftW-200;
+        pipe.x = tftW - 200;
         pipe.gap_y = random(10, GAMEH - (10 + GAPHEIGHT));
       }
 
@@ -307,7 +308,7 @@ void game_init() {
   // generate new random seed for the pipe gape
   randomSeed(analogRead(0));
   // init pipe
-  pipe.x = tftW-200;
+  pipe.x = tftW - 200;
   pipe.gap_y = random(20, tftH - 60);
 }
 

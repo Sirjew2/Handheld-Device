@@ -80,12 +80,14 @@ void initPong() {
   R = 5;
   L = 5;
 
+  sensorValue2 = analogRead(A2);
+  sensorValue3 = analogRead(A3);
 
 
-  if (digitalRead(buttonA) == HIGH) {
-    playerPaddle = playerPaddle + 3;
-  } else if (digitalRead(buttonB) == HIGH) {
-    playerPaddle = playerPaddle - 3;
+  if (digitalRead(buttonA) == HIGH || sensorValue2 > thresh) {
+    playerPaddle = playerPaddle + 2;
+  } else if (digitalRead(buttonB) == HIGH || sensorValue3 > thresh) {
+    playerPaddle = playerPaddle - 2;
   }
 
   //These equations are for the movement of the paddle, R, L, D, and U are all boolean.  paddles initially equal 48. This is so
@@ -153,7 +155,7 @@ void initPong() {
   DisplayScore(playerScore, computerScore);
 
   if (playerScore == WINSCORE || computerScore == WINSCORE) { // if someone hit the winning score then game over - print who one and reset game
-    tft.setRotation(1);
+    tft.setRotation(3);
     tft.setTextColor(WHITE, BLUE);
     tft.setCursor(30, 50);
     tft.setTextSize(3);
@@ -171,10 +173,10 @@ void initPong() {
     tft.setTextSize(2);
     tft.setTextColor(YELLOW, BLUE);
     tft.setCursor(8, 90);
-   // tft.println("Press SELECT to Return to Main Menu");
-   // tft.println("Press UP to Start New Game");
+    // tft.println("Press SELECT to Return to Main Menu");
+    // tft.println("Press UP to Start New Game");
     //while (digitalRead(buttonA) == HIGH);                                            // New game when swtich 4 is pressed
-    tft.setRotation(0);
+    tft.setRotation(2);
     tft.fillScreen(BLUE);
     tft.fillCircle(BPX, BPY, 7, BLUE);
     BPX = 15;
@@ -191,7 +193,7 @@ void initPong() {
     DrawCourt(0);
     DisplayScore(playerScore, computerScore);
 
-   // delay(2000);     // wait 4 seconds to start new game
+    // delay(2000);     // wait 4 seconds to start new game
   }
   //If you want, uncomment to use the new scoring method/output using bars
   //////////////////////////////////////////////
@@ -215,7 +217,7 @@ void DrawCourt(boolean onlycenter) // Draw the play court lines (pass 1 to onlu 
 
 void DisplayScore(int playerScore, int computerScore)  // display score with numbers.  Tested for WINSCORE <= 9 (ot greater # digits than 1)
 {
-  tft.setRotation(1);
+  tft.setRotation(3);
   tft.setTextColor(GREEN, BLUE);
   tft.setCursor(140, 5);
   tft.setTextSize(2);

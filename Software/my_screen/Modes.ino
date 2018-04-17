@@ -4,7 +4,7 @@ void loadMode() {
   if (lastMode != mode) {
     lastMode = mode;
     tft.fillScreen(BLUE);
-    tft.setRotation(1);
+    tft.setRotation(3);
   }
 
   switch (mode) {
@@ -33,7 +33,6 @@ static const unsigned char PROGMEM batt[] =
   B01011000, B00000110,
   B01011000, B00000110,
   B01011000, B00000110,
-  B01000000, B00000100,
   B00111111, B11111000,
 };
 
@@ -55,21 +54,22 @@ void mainMenu() {
   if (b == 3) {
     mode = curSelection + 1;
   }
+  Serial.print("sensor 2: "); Serial.println(sensorValue2);
+  Serial.print("sensor 3: "); Serial.println(sensorValue3);
+  tft.setTextSize(3);
+  tft.setTextColor(YELLOW, BLUE);
+  tft.setCursor(0, 0);
 
-    tft.setTextSize(3);
-    tft.setTextColor(YELLOW, BLUE);
-    tft.setCursor(0, 0);
+  tft.println("MGM Main Menu");
 
-    tft.println("MGM Main Menu");
+  tft.println("");
+  tft.println("Game Select:");
 
-    tft.println("");
-    tft.println("Game Select:");
-
-    tft.println("");
-    tft.println("");
-    tft.println("");
-    tft.println("");
-    tft.println("Other:");
+  tft.println("");
+  tft.println("");
+  tft.println("");
+  tft.println("");
+  tft.println("Other:");
 
 
   if (checkBattery < 100 || debug) {
